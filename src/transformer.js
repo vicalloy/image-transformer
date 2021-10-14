@@ -104,10 +104,11 @@ export async function prepareAndRunStyle(
   // Creat the session and load the pre-trained model
 
   const modelFile = "models/" + style + modelImageSize + ".onnx";
+  console.log("loading onnx model");
   let session = await createModelCpu(modelFile);
-  console.log("loading onnx:", style + modelImageSize + ".onnx");
-  // Run model with Tensor inputs and get the result.
+  console.log("transforming");
   const [output, time] = await runModel(session, inputTensor);
+  console.log("finished");
   session = null;
   let outputData = output.data;
   const dataFromImageBack = ndarray(

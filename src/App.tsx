@@ -15,6 +15,7 @@ function App() {
   const [sizeList = modelConfig[defaultStyle], setSizeList] = useState<number[]>();
   const [selectStyle = defaultStyle, setSelectedStyle] = useState<any>();
   const [selectImageSize = 135, setSelectedImageSize] = useState<any>();
+  const [hint = "please upload a image", setHint] = useState<string>();
 
   const radioHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const style = event.target.value;
@@ -42,12 +43,15 @@ function App() {
 
     useEffect(() => {
     if (imageSrc) {
+      setHint("transforming ...")
       prepareAndRunStyle(
-          imageSrc,
-          "resultCanvas",
-          selectImageSize,  // selectSize,
-          selectStyle,
-      )
+        imageSrc,
+        "resultCanvas",
+        selectImageSize,  // selectSize,
+        selectStyle,
+      ).then((value) => {
+        setHint("");
+      });
     } else {
     }
   }, [imageSrc, selectImageSize, selectStyle]);
@@ -59,7 +63,7 @@ function App() {
         <div>
           {Object.keys(modelConfig).map(function(key, index) {
             return (
-              <label>
+              <label key={key}>
                 <input type="radio" name="style" value={key} onChange={radioHandler} checked={key == selectStyle}/>
                 <img src={"assets/images/styles/" + key + ".jpg"}/>
               </label>
@@ -82,6 +86,9 @@ function App() {
           name="backgroundImg"
           onChange={fileOnChange}
         ></input>
+        <div>
+          { hint }
+        </div>
         <canvas id="resultCanvas" width={selectImageSize} height={selectImageSize} />
       </header>
     </div>
