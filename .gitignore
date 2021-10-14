@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 public/static/
+public/models/
 
 # IDE
 .idea/
@@ -9,7 +10,6 @@ public/static/
 /node_modules
 /.pnp
 .pnp.js
-*.onnx
 
 # testing
 /coverage
