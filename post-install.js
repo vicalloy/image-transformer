@@ -18,8 +18,6 @@ let download = function(url, dest) {
     console.log("file exists, ignore: " + dest);
     return
   }
-  console.log("file exists: " + dest);
-  xx
   console.log("downloading: " + url);
   let file = fs.createWriteStream(dest);
   let request = https.get(url, function(response) {
