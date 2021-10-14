@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { prepareAndRunStyle } from "./transformer.js";
 import './App.css';
+import './gh-fork-ribbon.css';
 import { modelConfig } from "./models";
 
 function App() {
@@ -86,6 +87,8 @@ function App() {
         </div>
         <canvas id="resultCanvas" width={selectImageSize} height={selectImageSize} />
       </header>
+      <a className="github-fork-ribbon" href="https://github.com/vicalloy/image-transformer" data-ribbon="Fork me on GitHub"
+         title="Fork me on GitHub">Fork me on GitHub</a>
     </div>
   );
 }
