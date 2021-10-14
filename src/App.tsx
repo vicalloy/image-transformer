@@ -61,8 +61,8 @@ function App() {
           {Object.keys(modelConfig).map(function(key, index) {
             return (
               <label key={key}>
-                <input type="radio" name="style" value={key} onChange={radioHandler} checked={key == selectStyle}/>
-                <img src={"assets/images/styles/" + key + ".jpg"}/>
+                <input type="radio" name="style" value={key} onChange={radioHandler} checked={key === selectStyle}/>
+                <img src={`${process.env.PUBLIC_URL}/assets/images/styles/${key}.jpg`}/>
               </label>
             )})}
         </div>

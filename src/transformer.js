@@ -104,7 +104,7 @@ export async function prepareAndRunStyle(
   dataProcessed = null;
   // Creat the session and load the pre-trained model
 
-  const modelFile = "models/" + style + modelImageSize + ".onnx";
+  const modelFile = `${process.env.PUBLIC_URL}/models/${style}${modelImageSize}.onnx`;
   console.log("loading onnx model");
   let session = await createModelCpu(modelFile);
   console.log("transforming");
