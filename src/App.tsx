@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { prepareAndRunStyle } from "./transformer.js";
 import './App.css';
-import candy from './assets/images/styles/candy.jpg';
-import gogh from './assets/images/styles/gogh.jpg';
-import rain from './assets/images/styles/rain.jpg';
 import { modelConfig } from "./models";
 
 function App() {
