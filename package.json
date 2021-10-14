@@ -24,6 +24,7 @@
     "prepare": "node post-install.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "gp-build": "react-scripts build && rm -rf docs/ && mv build/ docs/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
