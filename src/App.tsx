@@ -5,8 +5,6 @@ import { modelConfig } from "./models";
 
 function App() {
 
-  // https://github.com/mxkrn/onnxruntime-web-tutorial/blob/main/src/js/main.js
-  // https://github.com/kleinicke/fast_web_style_transfer/tree/master/public
   const [imageSrc, setImageSrc] = useState<any>();
   const defaultStyle = 'rain'
   const [sizeList = modelConfig[defaultStyle], setSizeList] = useState<number[]>();
