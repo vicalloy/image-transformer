@@ -37,6 +37,7 @@ function getModelImageSize(styleName, maxSize, imageDimensions) {
     }
     modelImageSize = size;
   }
+  modelImageSize = modelImageSize || sizeList[0];
   return modelImageSize;
 }
 
