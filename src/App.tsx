@@ -81,7 +81,7 @@ function App() {
           type="file"
           name="backgroundImg"
           onChange={fileOnChange}
-        ></input>
+        />
         <div>
           { hint }
         </div>
