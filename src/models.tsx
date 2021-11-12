@@ -5,4 +5,5 @@ export const modelConfig: { [key: string]: number[] } = {
   'mosaic': [224],
   'pointilism': [224],
   'udnie': [224],
+  'anime-gan-v2-': [512],
 }
