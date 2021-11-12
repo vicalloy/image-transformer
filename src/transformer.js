@@ -52,6 +52,7 @@ function getOutputDimension(image, modelImageSize) {
   return {width, height};
 }
 
+
 async function getData(image, modelImageSize, outputDimension) {
   let canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -61,23 +62,6 @@ async function getData(image, modelImageSize, outputDimension) {
   ctx.drawImage(image, 0, 0, outputDimension.width, outputDimension.height);
   const imgData = ctx.getImageData(0, 0, modelImageSize, modelImageSize).data;
   return new Float32Array(imgData);
-}
-
-
-function normalizeInputColor(data) {
-  const mean = [0.485, 0.456, 0.406];
-  const std = [0.229, 0.224, 0.225];
-  const normData = new Float32Array(data.length);
-  for (let i = 0; i < data.length; i += 3) {
-    normData[i] = (data[i] - mean[0]) / std[0];
-    normData[i + 1] = (data[i + 1] - mean[1]) / std[1];
-    normData[i + 2] = (data[i + 2] - mean[2]) / std[2];
-  }
-  return normData;
-}
-
-function normalizeOutputColor(data) {
-
 }
 
 
@@ -119,32 +103,19 @@ let preprocess = (imgData, modelImageSize, style) => {
   return inputTensor;
 }
 
-let postprocess = () => {
 
-}
-
-export async function prepareAndRunStyle(
-  imageSrc,
-  resultCanvas,
-  maxModelImageSize,
-  style,
-) {
-  const image = await loadImage(imageSrc)
-  const modelImageSize = getModelImageSize(
-    style, maxModelImageSize, {width: image.width, height: image.height});
-  const outputDimension = getOutputDimension(image, modelImageSize);
-  let imgData = await getData(image, modelImageSize, outputDimension);
-
-  const inputTensor = preprocess(imgData, modelImageSize, style);
-
-  const modelFile = `${process.env.PUBLIC_URL}/models/${style}${modelImageSize}.onnx`;
-  console.log("loading onnx model");
-  let session = await createModelCpu(modelFile);
-  console.log("transforming");
-  const [output, time] = await runModel(session, inputTensor);
-  console.log("finished");
-  session = null;
+let postprocess = (output, style, modelImageSize) => {
   let outputData = output.data;
+
+  if (style === 'anime-gan-v2-') {
+    for (let i = 0; i < outputData.length; i += 1) {
+      let c = outputData[i]
+      c = c * 0.5 + 0.5;
+      c = c < 0 ? 0 : c > 1 ? 255 : Math.round(c * 255);
+      outputData[i] = c;
+    }
+  }
+
   const dataFromImageBack = ndarray(
     new Float32Array(modelImageSize * modelImageSize * 4),
     [modelImageSize, modelImageSize, 4]
@@ -173,17 +144,38 @@ export async function prepareAndRunStyle(
   for (let y = 0; y < modelImageSize; y++) {
     for (let x = 0; x < modelImageSize; x++) {
       let pos = (y * modelImageSize + x) * 4; // position in buffer based on x and y
-      if (style === 'anime-gan-v2-') {
-        for (let i = 0; i < 3; i++) {
-          let c = dataForImage[pos + i];
-          c = c * 0.5 + 0.5;
-          c = c < 0 ? 0 : c > 1 ? 255 : Math.round(c * 255);
-          dataForImage[pos + i] = c;
-        }
-      }
       dataForImage[pos + 3] = 255; // set alpha channel
     }
   }
+
+  return dataForImage;
+}
+
+
+export async function prepareAndRunStyle(
+  imageSrc,
+  resultCanvas,
+  maxModelImageSize,
+  style,
+) {
+  const image = await loadImage(imageSrc)
+  const modelImageSize = getModelImageSize(
+    style, maxModelImageSize, {width: image.width, height: image.height});
+  const outputDimension = getOutputDimension(image, modelImageSize);
+  let imgData = await getData(image, modelImageSize, outputDimension);
+
+  const inputTensor = preprocess(imgData, modelImageSize, style);
+
+  const modelFile = `${process.env.PUBLIC_URL}/models/${style}${modelImageSize}.onnx`;
+  console.log("loading onnx model");
+  let session = await createModelCpu(modelFile);
+  console.log("transforming");
+  const [output, time] = await runModel(session, inputTensor);
+  console.log("finished");
+  session = null;
+
+  let dataForImage = postprocess(output, style, modelImageSize);
+
   let canvas = document.getElementById(resultCanvas);
   let ctx = canvas.getContext("2d");
   canvas.width = outputDimension.width;
