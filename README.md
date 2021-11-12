@@ -32,6 +32,10 @@ Open [http://localhost:3000/image-transformer](http://localhost:3000/image-trans
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
+## How to create you own onnx model
+
+- https://github.com/gnsmrky/pytorch-fast-neural-style-for-web
+
 ## Thanks to
 
 Some codes and models come from 
@@ -39,3 +43,4 @@ Some codes and models come from
 - https://github.com/kleinicke/fast_web_style_transfer/
 - https://github.com/microsoft/onnxruntime-web-demo
 - https://github.com/onnx/models/tree/master/vision/style_transfer/fast_neural_style
+- https://github.com/josephrocca/anime-gan-v2-web

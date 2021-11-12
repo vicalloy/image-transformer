@@ -50,3 +50,4 @@ downloadModels("rain", [135, 200, 300, 350, 500, 1000]);
 downloadModels("mosaic", [224]);
 downloadModels("pointilism", [224]);
 downloadModels("udnie", [224]);
+downloadModels("anime-gan-v2-", [512]);
