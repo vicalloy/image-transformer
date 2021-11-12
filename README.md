@@ -43,3 +43,4 @@ Some codes and models come from
 - https://github.com/kleinicke/fast_web_style_transfer/
 - https://github.com/microsoft/onnxruntime-web-demo
 - https://github.com/onnx/models/tree/master/vision/style_transfer/fast_neural_style
+- https://github.com/josephrocca/anime-gan-v2-web
