@@ -171,7 +171,7 @@ export async function prepareAndRunStyle(
   let session = await createModelCpu(modelFile);
   console.log("transforming");
   const [output, time] = await runModel(session, inputTensor);
-  console.log("finished");
+  console.log(`finished, inference time ${time}ms`);
   session = null;
 
   let dataForImage = postprocess(output, style, modelImageSize);
