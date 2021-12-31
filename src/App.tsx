@@ -86,6 +86,9 @@ function App() {
           { hint }
         </div>
         <canvas id="resultCanvas" width={selectImageSize} height={selectImageSize} />
+        <div className="App-link">
+          created by <a href="https://haoluobo.com">vicalloy</a>
+        </div>
       </header>
       <a className="github-fork-ribbon" href="https://github.com/vicalloy/image-transformer" data-ribbon="Fork me on GitHub"
          title="Fork me on GitHub">Fork me on GitHub</a>
